@@ -1,9 +1,8 @@
 <?php
-session_start(); // Ensure session is started
+session_start();
+include 'db.php';
 
-include 'db.php'; // Include your database connection file
-
-// Check if user is logged in
+// user check
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(array('error' => 'User not logged in'));
     header('Location: login.php');
@@ -11,31 +10,30 @@ if (!isset($_SESSION['user_id'])) {
 }
 $user_id = $_SESSION['user_id'];
 
-// Prepare SQL statement with a placeholder
+// prepare SQL 
 $stmt = $connect->prepare("SELECT * FROM frederick_data_table WHERE user_id = ?");
 if (!$stmt) {
     echo json_encode(array('error' => 'SQL prepare error: ' . $connect->error));
     exit();
 }
 
-// Bind parameters and execute the statement
+// bind user_id
 $stmt->bind_param("i", $user_id);
 if (!$stmt->execute()) {
     echo json_encode(array('error' => 'SQL execute error: ' . $stmt->error));
     exit();
 }
 
-// Fetch results
+// query results
 $result = $stmt->get_result();
 $data = array();
 while ($row = $result->fetch_assoc()) {
     $data[] = $row;
 }
 
-// Output the data as JSON
+// JSON data
 echo json_encode(array('data' => $data));
 
-// Close the statement and connection
 $stmt->close();
 $connect->close();
 ?>

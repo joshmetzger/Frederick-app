@@ -19,12 +19,10 @@
         <?php
         include 'db.php';
 
-        // Check if the form is submitted
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $_POST['username'];
             $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-            // Prepare and execute the query
             $stmt = $connect->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
             if ($stmt) {
                 $stmt->bind_param("ss", $username, $password);

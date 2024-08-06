@@ -1,6 +1,6 @@
-<?php include '../includes/navbar.php'; ?>
+<?php session_start(); ?>
 <?php include '../functions/config.php'; ?>
-
+<?php include '../includes/navbar.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">

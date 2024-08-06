@@ -17,6 +17,7 @@ $songwriter_royalties_withheld = $_POST['songwriter_royalties_withheld'];
 $earnings_usd = $_POST['earnings_usd'];
 $user_id = $_POST['user_id'];
 
+// TODO: this works now. update this for placeholders.. get rid of $user_id?
 $stmt = $connect->prepare("
     UPDATE frederick_data_table
     SET

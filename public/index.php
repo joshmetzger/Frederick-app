@@ -8,7 +8,7 @@
     $response = file_get_contents('https://restcountries.com/v3.1/all');
     $countriesData = json_decode($response, true);
 
-    // Extract country codes and names
+    // extract country codes and names
     $countries = [];
     foreach ($countriesData as $country) {
         $code = $country['cca2']; // alpha code
@@ -46,6 +46,17 @@
             if (isset($_SESSION['all_deleted_message'])) {
                 echo '<div class="alert alert-danger">' . $_SESSION['all_deleted_message'] . '</div>';
                 unset($_SESSION['all_deleted_message']);
+            }
+        ?>
+
+        <?php 
+            if(!isset($_SESSION['user_id'])){
+        ?>
+            <br>
+            <div class="text-center">
+                <a class="btn" style="background-color: green; color: white;" href="/Frederick/functions/login.php">Login</a> to view your records
+            </div>
+        <?php      
             }
         ?>
     
@@ -322,7 +333,7 @@
             document.getElementById('createForm').addEventListener('submit', function(event) {
                 let valid = true;
 
-                // Sale Month
+                // sale month. this may not be fully neccessary...
                 const saleMonth = document.getElementById('sale_month').value;
                 const saleMonthPattern = /^\d{4}-\d{2}$/;
                 if (!saleMonthPattern.test(saleMonth)) {
@@ -331,7 +342,7 @@
                 }
 
                 if (!valid) {
-                    // Prevent submission for fail
+                    // prevent submission for fail
                     event.preventDefault(); 
                 }
             });
@@ -361,7 +372,7 @@
             document.getElementById('editForm').addEventListener('submit', function(event) {
                 let valid = true;
 
-                // Sale Month
+                // sale month
                 const saleMonth = document.getElementById('edit_sale_month').value;
                 const saleMonthPattern = /^\d{4}-\d{2}$/;
                 if (!saleMonthPattern.test(saleMonth)) {
@@ -370,7 +381,7 @@
                 }
 
                 if (!valid) {
-                    // Prevent submission for fail
+                    // prevent submission for fail
                     event.preventDefault(); 
                 }
             });

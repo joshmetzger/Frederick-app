@@ -18,8 +18,19 @@
                 <ul class="nav navbar-nav">
                     <li><a href="/Frederick/public/index.php">MY Records</a></li>
                     <li><a href="/Frederick/functions/upload.php">Upload</a></li>
-                    <li><a href="/Frederick/functions/register.php">Register</a></li>
-                    <li><a href="/Frederick/functions/login.php">Login</a></li>
+                    <?php 
+                        if(!isset($_SESSION['user_id'])){
+                    ?>
+                        <li><a href="/Frederick/functions/login.php">Login</a></li>
+                        <li><a href="/Frederick/functions/register.php">Register</a></li>
+                    <?php      
+                        } else {
+                    ?>
+                            <li></li>
+                    <?php
+                        }
+                    ?>
+                    <!-- <li><a href="/Frederick/functions/register.php">Register</a></li> -->
                     <?php 
                         if(isset($_SESSION['user_id'])){
                     ?>

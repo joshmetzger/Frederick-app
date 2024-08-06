@@ -2,24 +2,25 @@
 session_start();
 include 'db.php';
 
-// Handle login form submission
+// login form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Prepare SQL query to fetch user data
+    // prepare SQL for user data
     $stmt = $connect->prepare("SELECT id, password FROM users WHERE username = ?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $stmt->store_result();
     
+    // could expand this so that usernames are unique...
     if ($stmt->num_rows === 1) {
         $stmt->bind_result($userId, $hashedPassword);
         $stmt->fetch();
         
-        // Verify password
+        // verify password
         if (password_verify($password, $hashedPassword)) {
-            // Set session variable and redirect to the upload page
+            // set session variable and redirect to the upload page
             $_SESSION['user_id'] = $userId;
             header('Location: upload.php');
             exit();
@@ -29,6 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $error = 'Invalid username or password.';
     }
+
+    // TODO: set session default timeout in php.ini for MAMP. currently should be one hour...
 
     $stmt->close();
 }
